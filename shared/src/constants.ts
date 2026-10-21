@@ -4,8 +4,8 @@
 /** Lifecycle of a downloaded filing. Each step is idempotent and resumable. */
 export const FILING_STATUSES = ['found', 'downloaded', 'parsed', 'indexed', 'failed'] as const;
 
-/** DRHP/RHP before listing; MAR (Monitoring Agency Report) and results after. */
-export const DOCUMENT_TYPES = ['drhp', 'rhp', 'addendum', 'mar', 'results'] as const;
+/** DRHP → RHP → prospectus before listing; MAR (Monitoring Agency Report) and results after. */
+export const DOCUMENT_TYPES = ['drhp', 'rhp', 'prospectus', 'addendum', 'mar', 'results'] as const;
 
 export const ISSUE_STATUSES = ['upcoming', 'open', 'closed', 'listed', 'withdrawn'] as const;
 

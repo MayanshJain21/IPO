@@ -10,6 +10,14 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
 
+  // A leading underscore marks a parameter as intentionally unused (e.g. Express's 4-arg
+  // error handler, which Express recognises by its arity).
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+  },
+
   // Node packages: server, pipeline, shared
   {
     files: ['server/**/*.ts', 'pipeline/**/*.ts', 'shared/**/*.ts', '*.{js,ts}'],

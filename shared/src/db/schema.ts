@@ -99,6 +99,7 @@ export const filings = pgTable(
       .notNull()
       .references(() => ipos.id, { onDelete: 'cascade' }),
     docType: documentType('doc_type').notNull(),
+    title: text('title'), // raw title from the source, e.g. 'Acme Limited – UDRHP-I'
     sourceUrl: text('source_url').notNull().unique(),
     filedOn: date('filed_on'),
 

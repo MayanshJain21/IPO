@@ -1,6 +1,7 @@
-import express from 'express';
+import express, { type ErrorRequestHandler } from 'express';
 import cors from 'cors';
 import { checkDb } from './db';
+import { iposRouter } from './routes/ipos';
 
 // Built separately from index.ts so tests can import the app without opening a port.
 export function createApp() {
@@ -13,6 +14,15 @@ export function createApp() {
     const db = await checkDb();
     res.json({ ok: true, service: 'ipo-tracker-api', db, time: new Date().toISOString() });
   });
+
+  app.use('/api/ipos', iposRouter);
+
+  // Express 5 forwards errors thrown in async handlers here. Log the detail, return a generic message.
+  const onError: ErrorRequestHandler = (err, _req, res, _next) => {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  };
+  app.use(onError);
 
   return app;
 }

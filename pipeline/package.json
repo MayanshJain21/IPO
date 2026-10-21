@@ -4,10 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "hello": "tsx --env-file-if-exists=../.env src/index.ts",
+    "scrape": "tsx --env-file-if-exists=../.env src/jobs/scrape.ts",
+    "test": "tsx --test \"test/**/*.test.ts\"",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@ipo/shared": "^0.1.0"
+    "@ipo/shared": "^0.1.0",
+    "cheerio": "^1.2.0",
+    "drizzle-orm": "^0.45.4",
+    "p-limit": "^7.3.3",
+    "undici": "^8.12.3",
+    "zod": "^4.6.7"
   }
 }

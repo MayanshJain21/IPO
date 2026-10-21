@@ -38,3 +38,15 @@ npm run db:generate -- --name <change>   # after editing schema.ts
 npm run db:migrate                       # apply to DATABASE_URL
 npm run db:studio                        # browse tables locally
 ```
+
+## Scraping new filings (Phase 2)
+
+```bash
+npm run scrape -- --dry-run                 # fetch + parse SEBI, BSE, NSE; write nothing
+npm run scrape                              # upsert into ipos + filings (last 30 days)
+npm run scrape -- --since 2025-01-01 --pages 40   # backfill
+npm test                                    # parser tests against saved real responses
+```
+
+Requests are throttled per site (1.5–2 s apart) and cached in `data/cache/` for a few hours.
+On Reliance Jio, Supabase's Postgres ports are blocked: turn on Cloudflare WARP first.

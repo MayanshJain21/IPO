@@ -8,6 +8,13 @@
       "when": 1792617991751,
       "tag": "20261021212631_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792625729057,
+      "tag": "20261021233529_scraper_fields",
+      "breakpoints": true
     }
   ]
 }
