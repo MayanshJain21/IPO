@@ -1,0 +1,29 @@
+# dependencies & builds
+node_modules/
+dist/
+*.tsbuildinfo
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# data: raw filings are never committed (they live in Supabase Storage / data/)
+*.pdf
+data/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# supabase local state
+supabase/.temp/
+supabase/.branches/
+
+# editors / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db

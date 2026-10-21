@@ -1,0 +1,39 @@
+{
+  "name": "ipo-tracker",
+  "private": true,
+  "type": "module",
+  "description": "IPO Red-Flag & Promise Tracker: forensic checks on Indian mainboard IPO filings",
+  "workspaces": [
+    "shared",
+    "server",
+    "pipeline",
+    "client"
+  ],
+  "scripts": {
+    "dev:server": "npm run dev -w @ipo/server",
+    "dev:client": "npm run dev -w @ipo/client",
+    "build:client": "npm run build -w @ipo/client",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "qdrant:up": "docker compose up -d qdrant",
+    "qdrant:down": "docker compose down"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.5",
+    "eslint": "^10.13.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.0"
+  }
+}

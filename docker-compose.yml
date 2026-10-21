@@ -1,0 +1,13 @@
+# Local Qdrant for development. In production we use a free Qdrant Cloud cluster.
+# Start: npm run qdrant:up   Dashboard: http://localhost:6333/dashboard
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.15.5
+    ports:
+      - '6333:6333' # REST API + dashboard
+      - '6334:6334' # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+volumes:
+  qdrant_data:

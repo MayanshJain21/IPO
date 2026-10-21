@@ -1,0 +1,13 @@
+{
+  "name": "@ipo/pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "hello": "tsx --env-file-if-exists=../.env src/index.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@ipo/shared": "^0.1.0"
+  }
+}
