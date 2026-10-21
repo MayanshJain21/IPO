@@ -27,3 +27,14 @@ npm run dev:client        # http://localhost:5173
 ```
 
 Useful scripts: `npm run typecheck`, `npm run lint`, `npm run format`, `npm run qdrant:up` (needs Docker).
+
+## Database
+
+The schema lives in `shared/src/db/schema.ts` (Drizzle). Migrations are generated into
+`supabase/migrations/`; never edit them by hand.
+
+```bash
+npm run db:generate -- --name <change>   # after editing schema.ts
+npm run db:migrate                       # apply to DATABASE_URL
+npm run db:studio                        # browse tables locally
+```

@@ -12,7 +12,7 @@ export default tseslint.config(
 
   // Node packages: server, pipeline, shared
   {
-    files: ['server/**/*.ts', 'pipeline/**/*.ts', 'shared/**/*.ts', '*.js'],
+    files: ['server/**/*.ts', 'pipeline/**/*.ts', 'shared/**/*.ts', '*.{js,ts}'],
     languageOptions: { globals: globals.node },
   },
 
