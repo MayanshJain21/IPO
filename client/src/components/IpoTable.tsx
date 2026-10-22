@@ -61,13 +61,22 @@ export function IpoTable({ rows }: { rows: IpoListItem[] }) {
                         {DOC_LABEL[t]}
                       </span>
                     ))}
-                    {ipo.pdfCount > 0 && (
+                    {ipo.parsedCount > 0 ? (
                       <span
-                        className="rounded bg-emerald-50 px-1.5 py-0.5 text-xs text-emerald-700 ring-1 ring-inset ring-emerald-600/20"
-                        title="PDF downloaded and stored, ready for parsing"
+                        className="rounded bg-sky-50 px-1.5 py-0.5 text-xs text-sky-700 ring-1 ring-inset ring-sky-600/20"
+                        title="Parsed: pages, sections and tables extracted"
                       >
-                        {ipo.pdfCount === 1 ? 'PDF ✓' : `${ipo.pdfCount} PDFs ✓`}
+                        {ipo.parsedCount === 1 ? 'Parsed ✓' : `${ipo.parsedCount} parsed ✓`}
                       </span>
+                    ) : (
+                      ipo.pdfCount > 0 && (
+                        <span
+                          className="rounded bg-emerald-50 px-1.5 py-0.5 text-xs text-emerald-700 ring-1 ring-inset ring-emerald-600/20"
+                          title="PDF downloaded and stored, ready for parsing"
+                        >
+                          {ipo.pdfCount === 1 ? 'PDF ✓' : `${ipo.pdfCount} PDFs ✓`}
+                        </span>
+                      )
                     )}
                   </div>
                   {ipo.lastFiledOn && (

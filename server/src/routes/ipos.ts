@@ -34,6 +34,7 @@ iposRouter.get('/', async (_req, res) => {
       >`coalesce(array_agg(distinct ${filings.docType}::text) filter (where ${filings.id} is not null), '{}')`,
       lastFiledOn: sql<string | null>`max(${filings.filedOn})::text`,
       pdfCount: sql<number>`count(${filings.storagePath})::int`,
+      parsedCount: sql<number>`(count(*) filter (where ${filings.status} in ('parsed', 'indexed')))::int`,
     })
     .from(ipos)
     .leftJoin(filings, eq(filings.ipoId, ipos.id))

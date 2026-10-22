@@ -25,6 +25,7 @@
     "scrape": "npm run scrape -w @ipo/pipeline --",
     "download": "npm run download -w @ipo/pipeline --",
     "upload": "npm run upload -w @ipo/pipeline --",
+    "process:new": "npm run process:new -w @ipo/pipeline --",
     "parse": "uv run --directory parser python -m ipo_parser",
     "test": "npm run test --workspaces --if-present",
     "test:parser": "uv run --directory parser pytest -q"

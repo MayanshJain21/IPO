@@ -113,11 +113,44 @@ export const filings = pgTable(
     pageCount: integer('page_count'),
     error: text('error'), // why it failed, or which filing it duplicates
     downloadedAt: timestamp('downloaded_at', { withTimezone: true }),
+
+    // Set by the parse step. The full parse (pages, tables) is a gzipped JSON file on disk:
+    // too big for the database, and only offline steps read it. Sections live in Postgres.
     parsedAt: timestamp('parsed_at', { withTimezone: true }),
+    parserVersion: text('parser_version'),
+    parsePath: text('parse_path'), // key in the parsed-output store, e.g. 'ab/abcd….json.gz'
+    tableCount: integer('table_count'),
+    parseWarnings: jsonb('parse_warnings').$type<string[]>(),
+
     indexedAt: timestamp('indexed_at', { withTimezone: true }),
     ...timestamps,
   },
   (t) => [index('filings_ipo_idx').on(t.ipoId), index('filings_status_idx').on(t.status)],
+).enableRLS();
+
+// --- filing_sections: a filing's table of contents with PDF page ranges (from the parser) ---
+export const filingSections = pgTable(
+  'filing_sections',
+  {
+    id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+    filingId: integer('filing_id')
+      .notNull()
+      .references(() => filings.id, { onDelete: 'cascade' }),
+    ipoId: integer('ipo_id')
+      .notNull()
+      .references(() => ipos.id, { onDelete: 'cascade' }),
+    ordinal: integer('ordinal').notNull(), // order in the table of contents
+    title: text('title').notNull(), // "RISK FACTORS"
+    level: smallint('level').notNull(), // 1 = SECTION part, 2 = entry inside it
+    part: text('part'), // "SECTION II" for level 1
+    printedPage: integer('printed_page'), // as printed in the TOC
+    pageStart: integer('page_start').notNull(), // physical PDF pages: use these for links
+    pageEnd: integer('page_end').notNull(),
+  },
+  (t) => [
+    uniqueIndex('filing_sections_filing_ordinal_uq').on(t.filingId, t.ordinal),
+    index('filing_sections_ipo_idx').on(t.ipoId),
+  ],
 ).enableRLS();
 
 // --- chunks: section-sized pieces of filing text; mirrored as Qdrant points (commit #12) ---

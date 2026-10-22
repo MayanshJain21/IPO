@@ -2,6 +2,7 @@ import express, { type ErrorRequestHandler } from 'express';
 import cors from 'cors';
 import { checkDb } from './db';
 import { iposRouter } from './routes/ipos';
+import { pipelineRouter } from './routes/pipeline';
 
 // Built separately from index.ts so tests can import the app without opening a port.
 export function createApp() {
@@ -16,6 +17,7 @@ export function createApp() {
   });
 
   app.use('/api/ipos', iposRouter);
+  app.use('/api/pipeline', pipelineRouter);
 
   // Express 5 forwards errors thrown in async handlers here. Log the detail, return a generic message.
   const onError: ErrorRequestHandler = (err, _req, res, _next) => {

@@ -74,3 +74,18 @@ npm run test:parser                                         # 14 tests on a gene
 ```
 
 See [parser/README.md](parser/README.md) for the JSON contract.
+
+## The offline pipeline (Phase 3)
+
+```bash
+npm run process:new -- --dry-run            # what would be processed
+npm run process:new -- --limit 10           # parse 10 downloaded filings, 2 at a time
+npm run process:new -- --concurrency 3      # more parsers side by side (1 CPU core each)
+npm run process:new -- --retry-failed       # retry parse failures
+npm run process:new -- --reparse --ipo <slug>   # after a parser improvement
+```
+
+For each downloaded filing: run the Python parser → save the full result as gzipped JSON in
+`data/parsed/ab/<pdf-sha256>.json.gz` (offline steps read it) → save its sections to
+`filing_sections` and mark it `parsed` (one transaction). Later steps (financials, red flags,
+Q&A index) will join this same command.

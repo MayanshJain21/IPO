@@ -136,3 +136,23 @@ def test_wrapped_labels_are_merged():
 
 def test_page_ranges():
     assert parse_page_ranges("1-3,10, 7") == [1, 2, 3, 7, 10]
+
+
+def test_heading_above_respects_pages_that_do_not_start_at_zero(tmp_path):
+    # A real addendum's page box ran from (-1, 1): cropping from x=0 used to raise ValueError.
+    import pdfplumber
+    import pymupdf
+
+    from ipo_parser.tables import heading_above
+
+    doc = pymupdf.open()
+    page = doc.new_page(width=600, height=800)
+    page.insert_text((60, 100), "Restated Statement of Profit and Loss", fontsize=10)
+    page.set_mediabox(pymupdf.Rect(-1, 1, 599, 801))  # origin moved off (0, 0)
+    path = tmp_path / "offset.pdf"
+    doc.save(path)
+
+    with pdfplumber.open(path) as pdf:
+        p = pdf.pages[0]
+        assert p.bbox[0] < 0  # the odd page box really is there
+        assert heading_above(p, top=p.bbox[1] + 120) == "Restated Statement of Profit and Loss"

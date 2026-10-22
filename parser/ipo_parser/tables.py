@@ -27,10 +27,15 @@ def clean_rows(raw: list[list[str | None]]) -> list[list[str]]:
 
 
 def heading_above(page: pdfplumber.page.Page, top: float, band: float = 40) -> str | None:
-    """Last line of text in the band just above a table: usually its title."""
-    if top <= 1:
+    """Last line of text in the band just above a table: usually its title.
+
+    Uses the page's real edges (`page.bbox`): some PDFs' pages don't start at (0, 0) — one
+    real addendum's page runs from (-1, 1) — and pdfplumber rejects a crop outside the page.
+    """
+    x0, y0, x1, _ = page.bbox
+    if top <= y0 + 1:
         return None
-    region = page.crop((0, max(0, top - band), page.width, top))
+    region = page.crop((x0, max(y0, top - band), x1, top))
     lines = [ln.strip() for ln in (region.extract_text() or "").splitlines() if ln.strip()]
     return lines[-1][:200] if lines else None
 

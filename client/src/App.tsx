@@ -1,5 +1,6 @@
 import { ChecksGrid } from '@/components/ChecksGrid';
 import { IpoLibrary } from '@/components/IpoLibrary';
+import { PipelineStatus } from '@/components/PipelineStatus';
 import { StatusCard } from '@/components/StatusCard';
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
           Forensic checks on Indian mainboard IPO filings. Not investment advice.
         </p>
         <StatusCard />
+        <PipelineStatus />
       </header>
       <IpoLibrary />
       <ChecksGrid />
