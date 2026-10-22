@@ -64,3 +64,13 @@ npm run upload -- --ipo <slug> --type drhp --file path/to/file.pdf   # admin fal
 PDFs are stored once under their SHA-256 in `data/filings/ab/abcd….pdf` (local disk: Supabase
 Storage's free 1 GB can't hold hundreds of ~10 MB filings). Status moves
 `found → downloaded | duplicate | failed`.
+
+## Parsing filings (Phase 3)
+
+```bash
+cd parser && uv sync && cd ..                               # once: Python 3.12 + PyMuPDF + pdfplumber
+npm run parse -- data/filings/ab/abcd….pdf --out out.json   # pages, sections, tables as JSON
+npm run test:parser                                         # 14 tests on a generated sample PDF
+```
+
+See [parser/README.md](parser/README.md) for the JSON contract.
