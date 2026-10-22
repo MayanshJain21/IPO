@@ -15,6 +15,13 @@
       "when": 1792625729057,
       "tag": "20261021233529_scraper_fields",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792636156607,
+      "tag": "20261022022916_download_fields",
+      "breakpoints": true
     }
   ]
 }

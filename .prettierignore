@@ -4,3 +4,5 @@ package-lock.json
 supabase/.temp
 parser
 *.pdf
+pipeline/test/fixtures
+data

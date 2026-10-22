@@ -1,8 +1,18 @@
 // Single source of truth for every fixed list in the project.
 // Postgres enums (db/schema.ts), Zod schemas (schemas.ts) and the UI all read these arrays.
 
-/** Lifecycle of a downloaded filing. Each step is idempotent and resumable. */
-export const FILING_STATUSES = ['found', 'downloaded', 'parsed', 'indexed', 'failed'] as const;
+/**
+ * Lifecycle of a filing. Each step is idempotent and resumable.
+ * 'duplicate': same file (SHA-256) as another filing; stored once, under that filing.
+ */
+export const FILING_STATUSES = [
+  'found',
+  'downloaded',
+  'duplicate',
+  'parsed',
+  'indexed',
+  'failed',
+] as const;
 
 /** DRHP → RHP → prospectus before listing; MAR (Monitoring Agency Report) and results after. */
 export const DOCUMENT_TYPES = ['drhp', 'rhp', 'prospectus', 'addendum', 'mar', 'results'] as const;

@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "scrape": "tsx --env-file-if-exists=../.env src/jobs/scrape.ts",
+    "download": "tsx --env-file-if-exists=../.env src/jobs/download.ts",
+    "upload": "tsx --env-file-if-exists=../.env src/jobs/upload.ts",
     "test": "tsx --test \"test/**/*.test.ts\"",
     "typecheck": "tsc -p tsconfig.json"
   },

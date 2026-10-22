@@ -103,11 +103,16 @@ export const filings = pgTable(
     sourceUrl: text('source_url').notNull().unique(),
     filedOn: date('filed_on'),
 
+    /** The PDF itself (sourceUrl is the SEBI page that links to it). */
+    pdfUrl: text('pdf_url'),
+
     status: filingStatus('status').notNull().default('found'),
     sha256: char('sha256', { length: 64 }).unique(), // set on download; dedupes re-uploads
-    storagePath: text('storage_path'), // Supabase Storage key or local path
+    storagePath: text('storage_path'), // key in the file store, e.g. 'ab/abcd….pdf'
+    sizeBytes: bigint('size_bytes', { mode: 'number' }),
     pageCount: integer('page_count'),
-    error: text('error'), // last failure message when status = 'failed'
+    error: text('error'), // why it failed, or which filing it duplicates
+    downloadedAt: timestamp('downloaded_at', { withTimezone: true }),
     parsedAt: timestamp('parsed_at', { withTimezone: true }),
     indexedAt: timestamp('indexed_at', { withTimezone: true }),
     ...timestamps,

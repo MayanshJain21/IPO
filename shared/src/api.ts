@@ -21,4 +21,6 @@ export type IpoListItem = Pick<
   filingCount: number;
   docTypes: DocumentType[];
   lastFiledOn: string | null;
+  /** Filings whose PDF is stored (downloaded or duplicate of a stored one). */
+  pdfCount: number;
 };

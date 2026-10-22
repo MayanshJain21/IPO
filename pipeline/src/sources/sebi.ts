@@ -132,3 +132,24 @@ export async function fetchSebiFilings(opts: {
 
   return all;
 }
+
+/**
+ * A filing's detail page → URL of the main document. SEBI shows it in a PDF viewer iframe:
+ *   <iframe src="../../../web/?file=https://www.sebi.gov.in/sebi_data/attachdocs/oct-2026/179….pdf">
+ * Other .pdf links on the page are the short "abridged prospectus", which we skip.
+ */
+export function parseSebiDetail(html: string, pageUrl: string): string | null {
+  const $ = cheerio.load(html);
+  for (const el of $('iframe').toArray()) {
+    const src = $(el).attr('src');
+    if (!src) continue;
+    const viewer = new URL(src, pageUrl);
+    const file = viewer.searchParams.get('file') ?? viewer.toString();
+    if (/\.pdf$/i.test(new URL(file, pageUrl).pathname)) return new URL(file, pageUrl).toString();
+  }
+  return null;
+}
+
+export async function fetchSebiPdfUrl(detailUrl: string): Promise<string | null> {
+  return parseSebiDetail(await politeFetch(detailUrl), detailUrl);
+}

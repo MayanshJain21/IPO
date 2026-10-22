@@ -50,3 +50,17 @@ npm test                                    # parser tests against saved real re
 
 Requests are throttled per site (1.5–2 s apart) and cached in `data/cache/` for a few hours.
 On Reliance Jio, Supabase's Postgres ports are blocked: turn on Cloudflare WARP first.
+
+## Downloading filings (Phase 2)
+
+```bash
+npm run download -- --dry-run --limit 5     # resolve PDF links only
+npm run download -- --limit 10              # download the 10 newest 'found' filings
+npm run download -- --ipo paras-healthcare  # one company
+npm run download -- --retry-failed          # try failed ones again
+npm run upload -- --ipo <slug> --type drhp --file path/to/file.pdf   # admin fallback
+```
+
+PDFs are stored once under their SHA-256 in `data/filings/ab/abcd….pdf` (local disk: Supabase
+Storage's free 1 GB can't hold hundreds of ~10 MB filings). Status moves
+`found → downloaded | duplicate | failed`.

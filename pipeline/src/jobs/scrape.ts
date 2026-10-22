@@ -6,6 +6,7 @@
 // detailed source (NSE) runs last.
 import { parseArgs } from 'node:util';
 import { createDb, type Db } from '@ipo/shared/db';
+import { requireEnv } from '../lib/env';
 import { setCacheEnabled } from '../lib/http';
 import { todayIST } from '../lib/values';
 import { fetchBseIssues } from '../sources/bse';
@@ -156,12 +157,6 @@ async function main() {
 
 function daysAgo(n: number) {
   return todayIST(new Date(Date.now() - n * 24 * 60 * 60 * 1000));
-}
-
-function requireEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) throw new Error(`${name} is not set. Copy .env.example to .env and fill it in.`);
-  return value;
 }
 
 await main();

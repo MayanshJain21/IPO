@@ -1,5 +1,5 @@
 import { ChecksGrid } from '@/components/ChecksGrid';
-import { IpoTable } from '@/components/IpoTable';
+import { IpoLibrary } from '@/components/IpoLibrary';
 import { StatusCard } from '@/components/StatusCard';
 
 export default function App() {
@@ -12,7 +12,7 @@ export default function App() {
         </p>
         <StatusCard />
       </header>
-      <IpoTable />
+      <IpoLibrary />
       <ChecksGrid />
     </main>
   );
